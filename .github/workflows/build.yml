@@ -1,0 +1,29 @@
+name: Build NDK Daemon
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Setup Android NDK
+      uses: nttld/setup-ndk@v1
+      with:
+        ndk-version: r21e
+
+    - name: Build with ndk-build
+      run: |
+        cd src/main/jni
+        ndk-build -j4
+
+    - name: Upload Binary
+      uses: actions/upload-artifact@v3
+      with:
+        name: daemon-binary
+        path: src/main/libs/**/*

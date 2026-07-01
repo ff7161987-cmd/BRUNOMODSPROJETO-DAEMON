@@ -16,11 +16,12 @@ jobs:
       uses: nttld/setup-ndk@v1
       with:
         ndk-version: r21e
+        add-to-path: true
 
     - name: Build with ndk-build
       run: |
         cd src/main/jni
-        ndk-build -j4
+        ndk-build -j$(nproc)
 
     - name: Upload Binary
       uses: actions/upload-artifact@v4

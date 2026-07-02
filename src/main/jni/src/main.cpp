@@ -1549,8 +1549,6 @@ void ESP_BrunoMods(JNIEnv *env, jclass clazz, jobject canvas, int SWidth, int SH
 
 void (*GrenadeUpdate)(void *instance);
 void _GrenadeUpdate(void *instance) {
-	
-}
    if (instance != nullptr) {
    GrenadeLine = instance;
    
@@ -1616,21 +1614,21 @@ void _SetUser(void * Anonymus) {
 void (*GetUserPause)(void * Anonymus);
 void _GetUserPause(void * Anonymus) {
 	
-    return true;
+    return;
 }
 
 void (*GetApplications)(void * Anonymus);
 void _GetApplications(void * Anonymus) {
 	
-    return false;
+    return;
 }
 
 void *Libil2cpp(void *) {
-    ProcMap2 il2cppMap;
+    mapsCache il2cppMap;
     do {
-        il2cppMap = KittyMemory::getLibraryMap("libil2cpp.so");
+        il2cppMap = KittyMemory::getAbsoluteAddress("libil2cpp.so");
         sleep(1);
-    } while (!il2cppMap.isValid());
+    } while (!il2cppMap.startAddr != 0);
     
   /*Patches.FlyCar = MemoryPatch("libil2cpp.so", 0x2011F90, "\x00\x00\x41\x42", 4);
 	Patches.UnderCar = MemoryPatch("libil2cpp.so", 0x2011F90, "\x00\x00\x20\xC0", 4);

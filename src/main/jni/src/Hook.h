@@ -65,9 +65,9 @@ Vvector3::~Vvector3() {}
 
 
 /*-------Bool playes-------*/
-bool (*AttackableEntity_GetIsDead)(void *attackableEntity) = (bool (*)(void *))getRealOffset(Global.GetIsDead);
+bool (*AttackableEntity_GetIsDead)(void *attackableEntity) = (bool *(*)(void *))getRealOffset(Global.GetIsDead);
 void* (*getPlayerByIndex)(void* match, uint8_t index) = (void*(*)(void *, uint8_t))getRealOffset(Global.Player_Index);
-bool (*getIsDead)(void *EntityIsDead) = (bool (*)(void *))getRealOffset(Global.GetIsDead);
+bool (*getIsDead)(void *EntityIsDead) = (bool *(*)(void *))getRealOffset(Global.GetIsDead);
 
 static void *GetLocalPlayer(void* Match) {
     void *(*_GetLocalPlayer)(void *match) = (void *(*)(void *))getRealOffset(Global.GetLocalPlayer);
@@ -75,17 +75,17 @@ static void *GetLocalPlayer(void* Match) {
 }
 
 static bool get_AttackableEntity_GetIsDead(void *player) {
-    bool (*_get_AttackableEntity_GetIsDead)(void *players) = (bool (*)(void *))getRealOffset(Global.GetIsDead);
+    bool (*_get_AttackableEntity_GetIsDead)(void *players) = (bool *(*)(void *))getRealOffset(Global.GetIsDead);
     return _get_AttackableEntity_GetIsDead(player);
 }
 	
 static bool get_isAlive(void *player) {
-    bool (*_get_isAlive)(void *players) = (bool (*)(void *))getRealOffset(Global.get_isAlive);
+    bool (*_get_isAlive)(void *players) = (bool *(*)(void *))getRealOffset(Global.get_isAlive);
     return _get_isAlive(player);
 }
 
 static bool get_isLocalTeam(void *player) {
-    bool (*_get_isLocalTeam)(void *players) = (bool (*)(void *))getRealOffset(Global.get_isLocalTeam);
+    bool (*_get_isLocalTeam)(void *players) = (bool *(*)(void *))getRealOffset(Global.get_isLocalTeam);
     return _get_isLocalTeam(player);
 }
 
@@ -95,12 +95,12 @@ static Vector3 GetAttackableCenterWS(void *player) {
 }
 
 static bool get_IsDieing(void *player) {
-    bool (*_get_die)(void *players) = (bool (*)(void *))getRealOffset(Global.get_IsDieing);
+    bool (*_get_die)(void *players) = (bool *(*)(void *))getRealOffset(Global.get_IsDieing);
     return _get_die(player);
 }
 
 static bool IsClientBot(void *player) {
-    bool (*_IsClientBot)(void *players) = (bool (*)(void *))getRealOffset(Global.IsClientBot);
+    bool (*_IsClientBot)(void *players) = (bool *(*)(void *))getRealOffset(Global.IsClientBot);
     return _IsClientBot(player);
 }
 
@@ -318,22 +318,22 @@ static void set_esp(void *imo, Vector3 x, Vector3 y) {
 
 /*-------Parte do aimbot-------*/
 static bool get_IsFiring(void *player) {
-    bool (*_get_IsFiring)(void *players) = (bool (*)(void *))getRealOffset(Global.get_IsFiring);
+    bool (*_get_IsFiring)(void *players) = (bool *(*)(void *))getRealOffset(Global.get_IsFiring);
     return _get_IsFiring(player);
 }
 
 static bool get_IsSighting(void *player) {
-    bool (*_get_IsSighting)(void *players) = (bool (*)(void *))getRealOffset(Global.get_IsSighting);
+    bool (*_get_IsSighting)(void *players) = (bool *(*)(void *))getRealOffset(Global.get_IsSighting);
     return _get_IsSighting(player);
 }
 
 static bool get_IsCrouching(void *player) {
-    bool (*_get_IsCrouching)(void *players) = (bool (*)(void *))getRealOffset(Global.get_IsCrouching);
+    bool (*_get_IsCrouching)(void *players) = (bool *(*)(void *))getRealOffset(Global.get_IsCrouching);
     return _get_IsCrouching(player);
 }
 
 static bool get_isVisible(void *player) {
-    bool (*_get_isVisible)(void *players) = (bool (*)(void *))getRealOffset(Global.get_isVisible);
+    bool (*_get_isVisible)(void *players) = (bool *(*)(void *))getRealOffset(Global.get_isVisible);
     return _get_isVisible(player);
 }
 
@@ -415,67 +415,67 @@ static void BrunoModsString(void *player, void *Strings, monoString *nick, monoS
 //Alerta
 
 static bool get_Tiro(void *player) {
-    bool (*_get_Tiro)(void *players) = (bool (*)(void *))getRealOffset(Global.get_Firing);
+    bool (*_get_Tiro)(void *players) = (bool *(*)(void *))getRealOffset(Global.get_Firing);
     return _get_Tiro(player);
 }
 
 static bool get_Mira(void *player) {
-    bool (*_get_Mira)(void *players) = (bool (*)(void *))getRealOffset(Global.get_Sighting);
+    bool (*_get_Mira)(void *players) = (bool *(*)(void *))getRealOffset(Global.get_Sighting);
     return _get_Mira(player);
 }
 
 static bool get_Driv(void *player) {
-    bool (*_get_Driv)(void *players) = (bool (*)(void *))getRealOffset(Global.get_Driver);
+    bool (*_get_Driv)(void *players) = (bool *(*)(void *))getRealOffset(Global.get_Driver);
     return _get_Driv(player);
 }
 
 static bool get_KitM(void *player) {
-    bool (*_get_KitM)(void *players) = (bool (*)(void *))getRealOffset(Global.get_Kitmedico);
+    bool (*_get_KitM)(void *players) = (bool *(*)(void *))getRealOffset(Global.get_Kitmedico);
     return _get_KitM(player);
 }
 
 static bool get_Skat(void *player) {
-    bool (*_get_Skat)(void *players) = (bool (*)(void *))getRealOffset(Global.get_SkySurfing);
+    bool (*_get_Skat)(void *players) = (bool *(*)(void *))getRealOffset(Global.get_SkySurfing);
     return _get_Skat(player);
 }
 
 static bool get_Prch(void *player) {
-    bool (*_get_Prch)(void *players) = (bool (*)(void *))getRealOffset(Global.get_Parachuting);
+    bool (*_get_Prch)(void *players) = (bool *(*)(void *))getRealOffset(Global.get_Parachuting);
     return _get_Prch(player);
 }
 
 static bool get_Crep(void *player) {
-    bool (*_get_Crep)(void *players) = (bool (*)(void *))getRealOffset(Global.get_IsCreep);
+    bool (*_get_Crep)(void *players) = (bool *(*)(void *))getRealOffset(Global.get_IsCreep);
     return _get_Crep(player);
 }
 
 static bool get_Swig(void *player) {
-    bool (*_get_Swig)(void *players) = (bool (*)(void *))getRealOffset(Global.get_IsSwimming);
+    bool (*_get_Swig)(void *players) = (bool *(*)(void *))getRealOffset(Global.get_IsSwimming);
     return _get_Swig(player);
 }
 
 static bool get_Alid(void *player) {
-    bool (*_get_Alid)(void *players) = (bool (*)(void *))getRealOffset(Global.get_IsRescureing);
+    bool (*_get_Alid)(void *players) = (bool *(*)(void *))getRealOffset(Global.get_IsRescureing);
     return _get_Alid(player);
 }
 
 static bool get_Croc(void *player) {
-    bool (*_get_Croc)(void *players) = (bool (*)(void *))getRealOffset(Global.get_Crouching);
+    bool (*_get_Croc)(void *players) = (bool *(*)(void *))getRealOffset(Global.get_Crouching);
     return _get_Croc(player);
 }
 
 static bool get_Grnd(void *player) {
-    bool (*_get_Grnd)(void *players) = (bool (*)(void *))getRealOffset(Global.get_IsGrenadeStart);
+    bool (*_get_Grnd)(void *players) = (bool *(*)(void *))getRealOffset(Global.get_IsGrenadeStart);
     return _get_Grnd(player);
 }
 
 static bool get_Knif(void *player) {
-    bool (*_get_Knif)(void *players) = (bool (*)(void *))getRealOffset(Global.get_IsThrowingKnifeStart);
+    bool (*_get_Knif)(void *players) = (bool *(*)(void *))getRealOffset(Global.get_IsThrowingKnifeStart);
     return _get_Knif(player);
 }
 
 static bool get_Cmfg(void *player) {
-    bool (*_get_Cmfg)(void *players) = (bool (*)(void *))getRealOffset(Global.get_IsWearingCamouflage);
+    bool (*_get_Cmfg)(void *players) = (bool *(*)(void *))getRealOffset(Global.get_IsWearingCamouflage);
     return _get_Cmfg(player);
 }
 

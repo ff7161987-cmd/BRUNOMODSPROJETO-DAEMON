@@ -806,7 +806,7 @@ Vector3 GetToeDPosition(void* player) {
 }
 
 static Vector3 WorldToScreenPoint(void *WorldCam, Vector3 WorldPos) {
-    Vector3 (*_WorldToScreenScene)(void* Camera, Vector3 position) = (Vector2 (*)(void*, Vector3)) getRealOffset(Global.WorldToScreenPoint);
+    Vector3 (*_WorldToScreenScene)(void* Camera, Vector3 position) = (Vector3 (*)(void*, Vector3)) getRealOffset(Global.WorldToScreenPoint);
     return _WorldToScreenScene(WorldCam,WorldPos);
 }
 

@@ -1472,10 +1472,15 @@ void DrawESP(ESP esp, int ScreenWidth, int ScreenHeight) {
              }
          }
      }
+}
+}
+}
+}
 } // End DrawESP
 Canvas *m_brunoView = 0;
 void ESP_BrunoMods(JNIEnv *env, jclass clazz, jobject canvas, int SWidth, int SHeight, float screenDensity) {
 	
+    if (!m_brunoView) { m_brunoView = new Canvas(env, SWidth, SHeight, screenDensity); }
     if (!m_brunoView) return;
     
 	m_brunoView->HighEndMode(true);
@@ -1857,8 +1862,4 @@ JNIEXPORT void JNICALL Java_uk_lgl_modmenu_FloatingModMenuService_DrawOn(JNIEnv 
     if (espOverlay.isValid()){
         DrawESP(espOverlay, espOverlay.getWidth(), espOverlay.getHeight());
     }
-}
-}
-}
-}
 }

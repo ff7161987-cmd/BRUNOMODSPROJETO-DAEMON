@@ -1474,6 +1474,8 @@ void DrawESP(ESP esp, int ScreenWidth, int ScreenHeight) {
      }
   }
 }
+}
+}
 
 
 Canvas *m_brunoView = 0;
@@ -1865,7 +1867,5 @@ JNIEXPORT void JNICALL Java_uk_lgl_modmenu_FloatingModMenuService_DrawOn(JNIEnv 
     if (espOverlay.isValid()){
         DrawESP(espOverlay, espOverlay.getWidth(), espOverlay.getHeight());
     }
-}
-}
 }
 }

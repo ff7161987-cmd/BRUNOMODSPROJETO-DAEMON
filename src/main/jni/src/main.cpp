@@ -1257,7 +1257,7 @@ void DrawESP(ESP esp, int ScreenWidth, int ScreenHeight) {
                   int NickBrunoMods = PlayName->getLength();
                                     
                   for (int i = 0; i < NickBrunoMods; i++) {
-                  char *data = get_Chars(PlayName, i);
+                  char data = get_Chars(PlayName, i);
                   playnick += isascii(*data) ? *data : ' ';
                   }
 				  

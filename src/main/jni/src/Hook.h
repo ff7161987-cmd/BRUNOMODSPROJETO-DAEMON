@@ -65,7 +65,7 @@ Vvector3::~Vvector3() {}
 
 
 /*-------Bool playes-------*/
-bool (*AttackableEntity_GetIsDead)(void *attackableEntity) = (bool *(*)(void *))getRealOffset(Global.GetIsDead);
+bool (*AttackableEntity_GetIsDead)(void *attackableEntity) = (bool (*)(void *))getRealOffset(Global.GetIsDead);
 void* (*getPlayerByIndex)(void* match, uint8_t index) = (void*(*)(void *, uint8_t))getRealOffset(Global.Player_Index);
 bool (*getIsDead)(void *EntityIsDead) = (bool *(*)(void *))getRealOffset(Global.GetIsDead);
 
@@ -75,17 +75,17 @@ static void *GetLocalPlayer(void* Match) {
 }
 
 static bool get_AttackableEntity_GetIsDead(void *player) {
-    bool (*_get_AttackableEntity_GetIsDead)(void *players) = (bool *(*)(void *))getRealOffset(Global.GetIsDead);
+    bool (*_get_AttackableEntity_GetIsDead)(void *players) = (bool (*)(void *))getRealOffset(Global.GetIsDead);
     return _get_AttackableEntity_GetIsDead(player);
 }
 	
 static bool get_isAlive(void *player) {
-    bool (*_get_isAlive)(void *players) = (bool *(*)(void *))getRealOffset(Global.get_isAlive);
+    bool (*_get_isAlive)(void *players) = (bool (*)(void *))getRealOffset(Global.get_isAlive);
     return _get_isAlive(player);
 }
 
 static bool get_isLocalTeam(void *player) {
-    auto _get_isLocalTeam(void *players) = (bool *(*)(void *))getRealOffset(Global.get_isLocalTeam);
+    bool (*_get_isLocalTeam)(void *players) = (bool (*)(void *))getRealOffset(Global.get_isLocalTeam);
     return _get_isLocalTeam(player);
 }
 
@@ -95,12 +95,12 @@ static Vector3 GetAttackableCenterWS(void *player) {
 }
 
 static bool get_IsDieing(void *player) {
-    bool (*_get_die)(void *players) = (bool *(*)(void *))getRealOffset(Global.get_IsDieing);
+    bool (*_get_die)(void *players) = (bool (*)(void *))getRealOffset(Global.get_IsDieing);
     return _get_die(player);
 }
 
 static bool IsClientBot(void *player) {
-    bool (*_IsClientBot)(void *players) = (bool *(*)(void *))getRealOffset(Global.IsClientBot);
+    bool (*_IsClientBot)(void *players) = (bool (*)(void *))getRealOffset(Global.IsClientBot);
     return _IsClientBot(player);
 }
 
@@ -115,7 +115,7 @@ static void *GetLocalPlayerOrObServer() {
 }
 
 static bool get_IsDriver(void *player) {
-    bool (*_IsDriver)(void *players) = (bool *(*)(void *))getRealOffset(Global.get_Driver);
+    bool (*_IsDriver)(void *players) = (bool (*)(void *))getRealOffset(Global.get_Driver);
     return _IsDriver(player);
 }
 
@@ -127,7 +127,7 @@ static int get_MaxHP(void* enemy) {
 }
 	
 static int GetHp(void* player) {
-    auto _GetHp(void* players) = (int *(*)(void *))getRealOffset(Global.get_CurHP);
+    int (*_GetHp)(void* players) = (int (*)(void *))getRealOffset(Global.get_CurHP);
     return _GetHp(player);
 }
 
@@ -162,7 +162,7 @@ static void ShowAssistantText(void *player, monoString *nick, monoString *grup) 
 }
 
 static monoString* get_weapon(string *player) {
-    monoString* (*_get_weapon)(string *players) = (string * (*)(void *))getRealOffset(0x815E30);
+    monoString* (*_get_weapon)(void *players) = (monoString * (*)(void *))getRealOffset(0x815E30);
     return  _get_weapon(player);
 }
 
@@ -318,22 +318,22 @@ static void set_esp(void *imo, Vector3 x, Vector3 y) {
 
 /*-------Parte do aimbot-------*/
 static bool get_IsFiring(void *player) {
-    auto _get_IsFiring(void *players) = (bool *(*)(void *))getRealOffset(Global.get_IsFiring);
+    bool (*_get_IsFiring)(void *players) = (bool (*)(void *))getRealOffset(Global.get_IsFiring);
     return _get_IsFiring(player);
 }
 
 static bool get_IsSighting(void *player) {
-    auto _get_IsSighting(void *players) = (bool *(*)(void *))getRealOffset(Global.get_IsSighting);
+    bool (*_get_IsSighting)(void *players) = (bool (*)(void *))getRealOffset(Global.get_IsSighting);
     return _get_IsSighting(player);
 }
 
 static bool get_IsCrouching(void *player) {
-    auto _get_IsCrouching(void *players) = (bool *(*)(void *))getRealOffset(Global.get_IsCrouching);
+    bool (*_get_IsCrouching)(void *players) = (bool (*)(void *))getRealOffset(Global.get_IsCrouching);
     return _get_IsCrouching(player);
 }
 
 static bool get_isVisible(void *player) {
-    auto _get_isVisible(void *players) = (bool *(*)(void *))getRealOffset(Global.get_isVisible);
+    bool (*_get_isVisible)(void *players) = (bool (*)(void *))getRealOffset(Global.get_isVisible);
     return _get_isVisible(player);
 }
 
@@ -343,7 +343,7 @@ static Vector3 GetForward(void *player) {
 }
 
 static void set_aim(void *player, Quaternion look) {
-    auto _set_aim(void *players, Quaternion lock) = (void (*)(void *, Quaternion))getRealOffset(Global.set_aim);
+    void (*_set_aim)(void *players, Quaternion lock) = (void (*)(void *, Quaternion))getRealOffset(Global.set_aim);
     _set_aim(player, look);
 }
 
@@ -393,7 +393,7 @@ static void ShowDynamicPopupMessage(monoString *nick) {
 }
 
 void (*ShowPopupMessage)(void *players, void * nicks, float duration) = (void (*)(void *, void *, float))getRealOffset(Global.ShowPopupMessage);
-void (*String_Concat)(void *_null, void *_this,void* str1, void* str2) = (void*(*)(void*,void*,void*, void*))getRealOffset(Global.String_Concat);
+void (*String_Concat)(void *_null, void *_this,void* str1, void* str2) = (void (*)(void*,void*,void*, void*))getRealOffset(Global.String_Concat);
 
 static void ShowPopupMessages(monoString *nick) {
     void (*_ShowPopupMessage)(void *players, monoString * nicks, float duration) = (void (*)(void *, monoString *, float))getRealOffset(Global.ShowPopupMessage);
@@ -403,7 +403,7 @@ static void ShowPopupMessages(monoString *nick) {
     }
 }
 
-static void BrunoModsString(void *player, void *Strings, monoString *nick, monoString *grup, float duration) {
+static void BrunoModsString(void *player, monoString *nick, monoString *grup, float duration) {
     void (*_BrunoModsString)(void *players, monoString * nicks, monoString * nickss, float duration) = (void (*)(void *, monoString *, monoString *, float))getRealOffset(Global.ShowPopupMessage);
     void *ui = CurrentUIScene();
     if (ui != nullptr) {
@@ -415,17 +415,17 @@ static void BrunoModsString(void *player, void *Strings, monoString *nick, monoS
 //Alerta
 
 static bool get_Tiro(void *player) {
-    bool (*_get_Tiro)(void *players) = (bool *(*)(void *))getRealOffset(Global.get_Firing);
+    bool (*_get_Tiro)(void *players) = (bool (*)(void *))getRealOffset(Global.get_Firing);
     return _get_Tiro(player);
 }
 
 static bool get_Mira(void *player) {
-    bool (*_get_Mira)(void *players) = (bool *(*)(void *))getRealOffset(Global.get_Sighting);
+    bool (*_get_Mira)(void *players) = (bool (*)(void *))getRealOffset(Global.get_Sighting);
     return _get_Mira(player);
 }
 
 static bool get_Driv(void *player) {
-    bool (*_get_Driv)(void *players) = (bool *(*)(void *))getRealOffset(Global.get_Driver);
+    bool (*_get_Driv)(void *players) = (bool (*)(void *))getRealOffset(Global.get_Driver);
     return _get_Driv(player);
 }
 

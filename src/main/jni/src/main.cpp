@@ -1039,7 +1039,7 @@ void _Update(void* Brunomods) {
 				  
 					if (EspPs && ui != nullptr) {
                     
-                    BrunoModsString(ui, String_Concat, get_NickName(closestEnemy), DistBrunoMods(distance), 2.0f);
+                    BrunoModsString(ui, get_NickName(closestEnemy), DistBrunoMods(distance), 2.0f);
 					}
 					
                     if (EspAlerta && ui != nullptr) {

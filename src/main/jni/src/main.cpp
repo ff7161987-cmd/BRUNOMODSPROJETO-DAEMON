@@ -1,17 +1,17 @@
 #include <iostream>
-#include <src/Includes/Utils.h>
-#include <src/Unity/Chams.h>
-#include <src/DHook/dhook.h>
+#include "Includes/Utils.h"
+#include "Unity/Chams.h"
+#include "DHook/dhook.h"
 #include "Hook.h"
 #include "Global.h"
 #include "Includes/Logger.h"
 #include "Includes/obfuscator.hpp"
 #include "Unity/ESP.h"
 #include "Unity/StructsCommon.h"
-#include "src/BrunoModsEsp/Rect.h"
-#include "src/BrunoModsEsp/Canvas.h"
-#include "src/BrunoModsEsp/Paint.h"
-#include "src/BrunoModsEsp/Typeface.h"
+#include "BrunoModsEsp/Rect.h"
+#include "BrunoModsEsp/Canvas.h"
+#include "BrunoModsEsp/Paint.h"
+#include "BrunoModsEsp/Typeface.h"
 #include "Unity/GL/include/bruno_chams.h"
 #include "memory/Memory.h"
 

@@ -1,121 +1,45 @@
-//
-//  KittyMemory.cpp
-//
-//  Created by MJ (Ruit) on 1/1/19.
-//
-
 #include "KittyMemory.h"
+#include <cstdio>
+#include <cstring>
+#include <vector>
 
-using KittyMemory::Memory_Status2;
-using KittyMemory::ProcMap2;
+#define _SYS_PAGE_SIZE_ (sysconf(_SC_PAGE_SIZE))
+#define _PAGE_START_OF_(x)    ((uintptr_t)x & ~(uintptr_t)(_SYS_PAGE_SIZE_ - 1))
+#define _PAGE_END_OF_(x, len) (_PAGE_START_OF_((uintptr_t)x + len - 1))
+#define _PAGE_LEN_OF_(x, len) (_PAGE_END_OF_(x, len) - _PAGE_START_OF_(x) + _SYS_PAGE_SIZE_)
+#define _PROT_RWX_ (PROT_READ | PROT_WRITE | PROT_EXEC)
+#define _PROT_RX_  (PROT_READ | PROT_EXEC)
 
-
-struct mapsCache {
-    std::string identifier;
-    ProcMap2 map;
-};
+using namespace KittyMemory;
 
 static std::vector<mapsCache> __mapsCache;
-static ProcMap2 findMapInCache(std::string id){
-    ProcMap2 ret;
-    for(int i = 0; i < __mapsCache.size(); i++){
-        if(__mapsCache[i].identifier.compare(id) == 0){
-            ret = __mapsCache[i].map;
-            break;
+
+static mapsCache findMapInCache(const char* libraryName) {
+    for (size_t i = 0; i < __mapsCache.size(); i++) {
+        if (__mapsCache[i].pathname.find(libraryName) != std::string::npos) {
+            return __mapsCache[i];
         }
     }
-    return ret;
+    return {};
 }
 
-
-bool KittyMemory::ProtectAddr(void *addr, size_t length, int protection) {
-   uintptr_t pageStart = _PAGE_START_OF_(addr);
-   uintptr_t pageLen   = _PAGE_LEN_OF_(addr, length);
-   return (
-     mprotect(reinterpret_cast<void *>(pageStart), pageLen, protection) != -1
- );
-}
-
-
-Memory_Status2 KittyMemory::memWrite(void *addr, const void *buffer, size_t len) {
-    if (addr == NULL)
-        return INV_ADDR;
-
-    if (buffer == NULL)
-        return INV_BUF;
-
-    if (len < 1 || len > INT_MAX)
-        return INV_LEN;
-
-    if (!ProtectAddr(addr, len, _PROT_RWX_))
-        return INV_PROT;
-
-    if (memcpy(addr, buffer, len) != NULL && ProtectAddr(addr, len, _PROT_RX_))
-        return SUCCESS;
-
-    return FAILED;
-}
-
-
-Memory_Status2 KittyMemory::memRead(void *buffer, const void *addr, size_t len) {
-    if (addr == NULL)
-        return INV_ADDR;
-
-    if (buffer == NULL)
-        return INV_BUF;
-
-    if (len < 1 || len > INT_MAX)
-        return INV_LEN;
-
-    if (memcpy(buffer, addr, len) != NULL)
-        return SUCCESS;
-
-    return FAILED;
-}
-
-
-std::string KittyMemory::read2HexStr(const void *addr, size_t len) {
-    char temp[len];
-    memset(temp, 0, len);
-	
-    const size_t bufferLen = len * 2 + 1;
-    char buffer[bufferLen];
-    memset(buffer, 0, bufferLen);
-
-    std::string ret;
-
-    if (memRead(temp, addr, len) != SUCCESS)
-        return ret;
-
-    for (int i = 0; i < len; i++) {
-        sprintf(&buffer[i * 2], "%02X", (unsigned char) temp[i]);
-    }
-
-    ret += buffer;
-    return ret;
-}
-
-ProcMap2 KittyMemory::getLibraryMap(const char *libraryName) {
-    ProcMap2 retMap;
+static mapsCache getLibraryMap(const char *libraryName) {
+    mapsCache retMap = {};
     char line[512] = {0};
-
     FILE *fp = fopen("/proc/self/maps", "rt");
     if (fp != NULL) {
         while (fgets(line, sizeof(line), fp)) {
             if (strstr(line, libraryName)) {
                 char tmpPerms[5] = {0}, tmpDev[12] = {0}, tmpPathname[444] = {0};
-                // parse a line in maps file
-                // (format) startAddress-endAddress perms offset dev inode pathname
+                long offset;
+                int inode;
                 sscanf(line, "%llx-%llx %s %ld %s %d %s",
                        (long long unsigned *) &retMap.startAddr,
                        (long long unsigned *) &retMap.endAddr,
-                       tmpPerms, &retMap.offset, tmpDev, &retMap.inode, tmpPathname);
-
+                       tmpPerms, &offset, tmpDev, &inode, tmpPathname);
                 retMap.length = (uintptr_t) retMap.endAddr - (uintptr_t) retMap.startAddr;
                 retMap.perms = tmpPerms;
-                retMap.dev = tmpDev;
                 retMap.pathname = tmpPathname;
-
                 break;
             }
         }
@@ -125,24 +49,17 @@ ProcMap2 KittyMemory::getLibraryMap(const char *libraryName) {
 }
 
 uintptr_t KittyMemory::getAbsoluteAddress(const char *libraryName, uintptr_t relativeAddr, bool useCache) {
-    ProcMap2 libMap;
-
-    if(useCache){
+    mapsCache libMap = {};
+    if (useCache) {
         libMap = findMapInCache(libraryName);
-        if(libMap.isValid())
-        return (reinterpret_cast<uintptr_t>(libMap.startAddr) + relativeAddr);
+        if (libMap.startAddr != 0)
+            return (libMap.startAddr + relativeAddr);
     }
-       
     libMap = getLibraryMap(libraryName);
-    if (!libMap.isValid())
+    if (libMap.startAddr == 0)
         return 0;
-
-    if(useCache){
-        mapsCache cachedMap;
-        cachedMap.identifier = libraryName;
-        cachedMap.map        = libMap;
-        __mapsCache.push_back(cachedMap);
+    if (useCache) {
+        __mapsCache.push_back(libMap);
     }
-
-    return (reinterpret_cast<uintptr_t>(libMap.startAddr) + relativeAddr);
+    return (libMap.startAddr + relativeAddr);
 }

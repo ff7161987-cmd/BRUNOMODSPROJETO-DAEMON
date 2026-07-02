@@ -85,7 +85,7 @@ static bool get_isAlive(void *player) {
 }
 
 static bool get_isLocalTeam(void *player) {
-    bool (*_get_isLocalTeam)(void *players) = (bool *(*)(void *))getRealOffset(Global.get_isLocalTeam);
+    auto _get_isLocalTeam(void *players) = (bool *(*)(void *))getRealOffset(Global.get_isLocalTeam);
     return _get_isLocalTeam(player);
 }
 
@@ -127,7 +127,7 @@ static int get_MaxHP(void* enemy) {
 }
 	
 static int GetHp(void* player) {
-    int (*_GetHp)(void* players) = (int *(*)(void *))getRealOffset(Global.get_CurHP);
+    auto _GetHp(void* players) = (int *(*)(void *))getRealOffset(Global.get_CurHP);
     return _GetHp(player);
 }
 
@@ -318,22 +318,22 @@ static void set_esp(void *imo, Vector3 x, Vector3 y) {
 
 /*-------Parte do aimbot-------*/
 static bool get_IsFiring(void *player) {
-    bool (*_get_IsFiring)(void *players) = (bool *(*)(void *))getRealOffset(Global.get_IsFiring);
+    auto _get_IsFiring(void *players) = (bool *(*)(void *))getRealOffset(Global.get_IsFiring);
     return _get_IsFiring(player);
 }
 
 static bool get_IsSighting(void *player) {
-    bool (*_get_IsSighting)(void *players) = (bool *(*)(void *))getRealOffset(Global.get_IsSighting);
+    auto _get_IsSighting(void *players) = (bool *(*)(void *))getRealOffset(Global.get_IsSighting);
     return _get_IsSighting(player);
 }
 
 static bool get_IsCrouching(void *player) {
-    bool (*_get_IsCrouching)(void *players) = (bool *(*)(void *))getRealOffset(Global.get_IsCrouching);
+    auto _get_IsCrouching(void *players) = (bool *(*)(void *))getRealOffset(Global.get_IsCrouching);
     return _get_IsCrouching(player);
 }
 
 static bool get_isVisible(void *player) {
-    bool (*_get_isVisible)(void *players) = (bool *(*)(void *))getRealOffset(Global.get_isVisible);
+    auto _get_isVisible(void *players) = (bool *(*)(void *))getRealOffset(Global.get_isVisible);
     return _get_isVisible(player);
 }
 
@@ -343,7 +343,7 @@ static Vector3 GetForward(void *player) {
 }
 
 static void set_aim(void *player, Quaternion look) {
-    void (*_set_aim)(void *players, Quaternion lock) = (void (*)(void *, Quaternion))getRealOffset(Global.set_aim);
+    auto _set_aim(void *players, Quaternion lock) = (void (*)(void *, Quaternion))getRealOffset(Global.set_aim);
     _set_aim(player, look);
 }
 

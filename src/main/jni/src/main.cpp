@@ -1476,6 +1476,7 @@ void DrawESP(ESP esp, int ScreenWidth, int ScreenHeight) {
 }
 }
 }
+}
 Canvas *m_brunoView = 0;
 void ESP_BrunoMods(JNIEnv *env, jclass clazz, jobject canvas, int SWidth, int SHeight, float screenDensity) {
 	
@@ -1591,7 +1592,7 @@ bool _GetAnonymus(bool * Anonymus) {
 void (*SetInstance)(void * Anonymus);
 void _SetInstance(void * Anonymus) {
 	
-    return false;
+    return;
 }
 
 bool (*SetAnonymus)(void * Anonymus);
@@ -1603,13 +1604,13 @@ bool _SetAnonymus(void * Anonymus) {
 void (*SetAnonymus2)(void * Anonymus);
 void _SetAnonymus2(void * Anonymus) {
 	
-    return false;
+    return;
 }
 
 void (*SetUser)(void * Anonymus);
 void _SetUser(void * Anonymus) {
 	
-    return false;
+    return;
 }
 
 void (*GetUserPause)(void * Anonymus);

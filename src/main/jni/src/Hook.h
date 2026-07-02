@@ -138,7 +138,7 @@ static monoString *U3DStr(const char *str) {
     return String_CreateString(nullptr, str);
 }
 
-static char *get_Chars(monoString* names, int indexs) {
+static char get_Chars(monoString* names, int indexs) {
     char (*_get_Chars)(monoString *name, int index) = (char (*)(monoString*, int))getRealOffset(Global.get_Chars);
     return _get_Chars(names, indexs);
 }

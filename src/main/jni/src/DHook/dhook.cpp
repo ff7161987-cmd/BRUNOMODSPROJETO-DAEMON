@@ -22,8 +22,8 @@ void copyBranchBytes(byte * bytes, p_void target) {
 
 // Set @protection flags on @target starting page, @return mprotect response parsed as MEMPROTECT_STATUS
 MEMPROTECT_STATUS setPageProtection(void * target, int protection) {
-    p_void page_start = (p_void)((uint32_t)target - (uint32_t)target % PAGE_SIZE);
-    return (MEMPROTECT_STATUS) mprotect((p_void)page_start, PAGE_SIZE, protection);
+    p_void page_start = (p_void)((uint32_t)target - (uint32_t)target % sysconf(_SC_PAGESIZE));
+    return (MEMPROTECT_STATUS) mprotect((p_void)page_start, sysconf(_SC_PAGESIZE), protection);
 }
 
 // Set @len bytes on @dest from @source
